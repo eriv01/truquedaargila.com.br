@@ -175,19 +175,29 @@
   .opt-radio{width:20px;height:20px;border-radius:50%;border:2px solid #ccc;margin-left:auto;flex-shrink:0;transition:all .2s;background:#fff;}
   .opt-item.selected .opt-radio{background:var(--red);border-color:var(--red);}
 
-  /* INPUT ALTURA/PESO */
-  .input-wrap{margin-bottom:20px;}
-  .input-row{display:flex;gap:10px;align-items:flex-end;}
-  .input-field{
-    flex:1;border:2.5px solid #e0e0e0;border-radius:12px;
-    padding:16px 14px;font-size:22px;font-weight:700;
-    text-align:center;outline:none;color:var(--black);
-    transition:border-color .2s;background:#fff;
-    -webkit-appearance:none;
-  }
-  .input-field:focus{border-color:var(--red);}
-  .input-unit{font-size:16px;font-weight:700;color:#888;padding-bottom:18px;flex-shrink:0;}
-  .input-hint{font-size:12px;color:#aaa;text-align:center;margin-top:8px;}
+  /* RÉGUA DESLIZANTE */
+  .ruler-wrap{margin-bottom:24px;}
+  .ruler-toggle{display:flex;background:#e8e8e8;border-radius:999px;padding:3px;width:fit-content;margin:0 auto 20px;gap:2px;}
+  .ruler-toggle button{border:none;background:none;padding:7px 22px;border-radius:999px;font-size:13px;font-weight:700;color:#888;cursor:pointer;transition:all .2s;}
+  .ruler-toggle button.active{background:var(--black);color:#fff;}
+  .ruler-value-display{text-align:center;margin-bottom:16px;}
+  .ruler-val{font-size:52px;font-weight:900;color:var(--black);line-height:1;}
+  .ruler-val-unit{font-size:20px;font-weight:500;color:#888;margin-left:4px;}
+  .ruler-container{position:relative;height:80px;overflow:hidden;cursor:grab;user-select:none;touch-action:pan-y;}
+  .ruler-container:active{cursor:grabbing;}
+  .ruler-track{display:flex;align-items:flex-end;height:100%;width:max-content;transition:transform .05s linear;}
+  .ruler-tick{display:flex;flex-direction:column;align-items:center;width:10px;flex-shrink:0;}
+  .ruler-tick-line{width:1.5px;border-radius:1px;background:#ccc;}
+  .ruler-tick.major .ruler-tick-line{background:#888;width:2px;}
+  .ruler-tick-num{font-size:10px;color:#999;margin-top:4px;font-weight:600;white-space:nowrap;}
+  .ruler-needle{position:absolute;left:50%;top:0;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;pointer-events:none;z-index:2;}
+  .ruler-needle-line{width:2.5px;height:56px;background:var(--black);border-radius:2px;}
+  .ruler-needle-arrow{width:0;height:0;border-left:6px solid transparent;border-right:6px solid transparent;border-top:8px solid var(--black);}
+  .ruler-hint{font-size:12px;color:#aaa;text-align:center;margin-top:10px;}
+  /* fade laterais */
+  .ruler-container::before,.ruler-container::after{content:'';position:absolute;top:0;bottom:0;width:60px;z-index:1;pointer-events:none;}
+  .ruler-container::before{left:0;background:linear-gradient(to right,#fff,transparent);}
+  .ruler-container::after{right:0;background:linear-gradient(to left,#fff,transparent);}
 
   /* BOTÃO CONTINUAR */
   .btn-continuar{
@@ -468,29 +478,43 @@
     <!-- ETAPA 3 — Altura -->
     <div class="quiz-step" id="step-3">
       <div class="quiz-question">Qual é a sua altura?</div>
-      <div class="quiz-sub">Isso nos ajuda a personalizar seu resultado</div>
-      <div class="input-wrap">
-        <div class="input-row">
-          <input type="number" class="input-field" id="inp-altura" placeholder="165" min="100" max="220" oninput="checkInput('inp-altura','btn-3',100,220)">
-          <span class="input-unit">cm</span>
+      <div class="quiz-sub">Arraste para selecionar sua altura</div>
+      <div class="ruler-wrap">
+        <div class="ruler-toggle">
+          <button class="active" id="alt-cm-btn" onclick="setAltUnit('cm')">cm</button>
+          <button id="alt-pol-btn" onclick="setAltUnit('pol')">pol</button>
         </div>
-        <div class="input-hint">Ex: 165 para 1,65m</div>
+        <div class="ruler-value-display">
+          <span class="ruler-val" id="alt-val">165</span><span class="ruler-val-unit" id="alt-unit">cm</span>
+        </div>
+        <div class="ruler-container" id="ruler-altura">
+          <div class="ruler-track" id="track-altura"></div>
+          <div class="ruler-needle"><div class="ruler-needle-line"></div><div class="ruler-needle-arrow"></div></div>
+        </div>
+        <div class="ruler-hint">Arraste para selecionar sua Altura</div>
       </div>
-      <button class="btn-continuar" id="btn-3" onclick="nextStep(4)">Continuar →</button>
+      <button class="btn-continuar enabled" id="btn-3" onclick="nextStep(4)">Continuar →</button>
     </div>
 
     <!-- ETAPA 4 — Peso -->
     <div class="quiz-step" id="step-4">
       <div class="quiz-question">Qual é o seu peso atual?</div>
-      <div class="quiz-sub">Não se preocupe, essa informação é confidencial 🔒</div>
-      <div class="input-wrap">
-        <div class="input-row">
-          <input type="number" class="input-field" id="inp-peso" placeholder="65" min="30" max="250" oninput="checkInput('inp-peso','btn-4',30,250)">
-          <span class="input-unit">kg</span>
+      <div class="quiz-sub">Arraste para selecionar seu peso</div>
+      <div class="ruler-wrap">
+        <div class="ruler-toggle">
+          <button class="active" id="peso-kg-btn" onclick="setPesoUnit('kg')">kg</button>
+          <button id="peso-lb-btn" onclick="setPesoUnit('lb')">lb</button>
         </div>
-        <div class="input-hint">Ex: 65 para 65 quilos</div>
+        <div class="ruler-value-display">
+          <span class="ruler-val" id="peso-val">65</span><span class="ruler-val-unit" id="peso-unit">kg</span>
+        </div>
+        <div class="ruler-container" id="ruler-peso">
+          <div class="ruler-track" id="track-peso"></div>
+          <div class="ruler-needle"><div class="ruler-needle-line"></div><div class="ruler-needle-arrow"></div></div>
+        </div>
+        <div class="ruler-hint">Arraste para selecionar sua Peso</div>
       </div>
-      <button class="btn-continuar" id="btn-4" onclick="nextStep(5)">Continuar →</button>
+      <button class="btn-continuar enabled" id="btn-4" onclick="nextStep(5)">Continuar →</button>
     </div>
 
     <!-- ETAPA 5 — Localizada -->
@@ -830,6 +854,8 @@ function nextStep(next){
   document.getElementById('step-'+currentStep).classList.add('active');
   updateProgress(currentStep);
   window.scrollTo(0,0);
+  if(next===3 && !rulerAltura) setTimeout(initRulerAltura,50);
+  if(next===4 && !rulerPeso) setTimeout(initRulerPeso,50);
 }
 
 function finalizarQuiz(){
@@ -976,9 +1002,122 @@ document.addEventListener('visibilitychange',()=>{if(document.visibilityState===
 window.addEventListener('popstate',()=>{showExitModal();history.pushState(null,'',location.href);});
 history.pushState(null,'',location.href);
 
+// ===== RÉGUA DESLIZANTE =====
+function buildRuler(trackId, min, max, step, initialVal, onChange) {
+  const track = document.getElementById(trackId);
+  track.innerHTML = '';
+  const tickW = 10;
+  const ticks = [];
+  for (let v = min; v <= max; v += step) {
+    const tick = document.createElement('div');
+    tick.className = 'ruler-tick' + (v % (step * 5) === 0 ? ' major' : '');
+    const line = document.createElement('div');
+    line.className = 'ruler-tick-line';
+    line.style.height = (v % (step * 5) === 0 ? '32px' : '18px');
+    tick.appendChild(line);
+    if (v % (step * 5) === 0) {
+      const num = document.createElement('div');
+      num.className = 'ruler-tick-num';
+      num.textContent = v;
+      tick.appendChild(num);
+    }
+    track.appendChild(tick);
+    ticks.push(v);
+  }
+
+  const container = track.parentElement;
+  const centerX = container.offsetWidth / 2;
+  let currentVal = initialVal;
+  let startX = 0, startOffset = 0, isDragging = false;
+
+  function valToOffset(val) {
+    const idx = ticks.indexOf(val);
+    return idx < 0 ? 0 : -(idx * tickW - centerX + tickW / 2);
+  }
+
+  function offsetToVal(offset) {
+    const idx = Math.round((centerX - offset - tickW / 2) / tickW);
+    const clamped = Math.max(0, Math.min(ticks.length - 1, idx));
+    return ticks[clamped];
+  }
+
+  function setVal(val) {
+    currentVal = val;
+    track.style.transform = 'translateX(' + valToOffset(val) + 'px)';
+    onChange(val);
+  }
+
+  setVal(initialVal);
+
+  // Mouse
+  container.addEventListener('mousedown', (e) => {
+    isDragging = true; startX = e.clientX; startOffset = valToOffset(currentVal);
+  });
+  window.addEventListener('mousemove', (e) => {
+    if (!isDragging) return;
+    const offset = startOffset + (e.clientX - startX);
+    setVal(offsetToVal(offset));
+  });
+  window.addEventListener('mouseup', () => { isDragging = false; });
+
+  // Touch
+  container.addEventListener('touchstart', (e) => {
+    isDragging = true; startX = e.touches[0].clientX; startOffset = valToOffset(currentVal);
+  }, { passive: true });
+  container.addEventListener('touchmove', (e) => {
+    if (!isDragging) return;
+    const offset = startOffset + (e.touches[0].clientX - startX);
+    setVal(offsetToVal(offset));
+  }, { passive: true });
+  container.addEventListener('touchend', () => { isDragging = false; });
+
+  return { setVal };
+}
+
+// ALTURA
+let altUnit = 'cm';
+let altValCm = 165;
+let rulerAltura;
+
+function initRulerAltura() {
+  rulerAltura = buildRuler('track-altura', 100, 220, 1, altValCm, (v) => {
+    altValCm = v;
+    document.getElementById('alt-val').textContent = altUnit === 'cm' ? v : Math.round(v / 2.54);
+  });
+}
+
+function setAltUnit(unit) {
+  altUnit = unit;
+  document.getElementById('alt-cm-btn').classList.toggle('active', unit === 'cm');
+  document.getElementById('alt-pol-btn').classList.toggle('active', unit === 'pol');
+  document.getElementById('alt-unit').textContent = unit;
+  document.getElementById('alt-val').textContent = unit === 'cm' ? altValCm : Math.round(altValCm / 2.54);
+}
+
+// PESO
+let pesoUnit = 'kg';
+let pesoValKg = 65;
+let rulerPeso;
+
+function initRulerPeso() {
+  rulerPeso = buildRuler('track-peso', 30, 200, 1, pesoValKg, (v) => {
+    pesoValKg = v;
+    document.getElementById('peso-val').textContent = pesoUnit === 'kg' ? v : Math.round(v * 2.205);
+  });
+}
+
+function setPesoUnit(unit) {
+  pesoUnit = unit;
+  document.getElementById('peso-kg-btn').classList.toggle('active', unit === 'kg');
+  document.getElementById('peso-lb-btn').classList.toggle('active', unit === 'lb');
+  document.getElementById('peso-unit').textContent = unit;
+  document.getElementById('peso-val').textContent = unit === 'kg' ? pesoValKg : Math.round(pesoValKg * 2.205);
+}
+
+// Inicializa réguas quando as etapas ficam visíveis
+
 // MÁSCARAS
 document.getElementById('inp-wpp').addEventListener('input',function(){let v=this.value.replace(/\D/g,'');if(v.length>11)v=v.slice(0,11);if(v.length>6)v='('+v.slice(0,2)+') '+v.slice(2,7)+'-'+v.slice(7);else if(v.length>2)v='('+v.slice(0,2)+') '+v.slice(2);else if(v.length>0)v='('+v;this.value=v;});
 document.getElementById('inp-cpf').addEventListener('input',function(){let v=this.value.replace(/\D/g,'');if(v.length>11)v=v.slice(0,11);if(v.length>9)v=v.slice(0,3)+'.'+v.slice(3,6)+'.'+v.slice(6,9)+'-'+v.slice(9);else if(v.length>6)v=v.slice(0,3)+'.'+v.slice(3,6)+'.'+v.slice(6);else if(v.length>3)v=v.slice(0,3)+'.'+v.slice(3);this.value=v;});
-</script>
 </body>
 </html>
