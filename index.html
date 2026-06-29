@@ -1,0 +1,983 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Veja o Truque Para Firmar a Barriga</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  :root{
+    --red:#E8000D;--red-dark:#B50009;
+    --gray-light:#F7F7F7;--black:#111;
+    --green:#1a9c4a;
+  }
+  html{font-size:16px;scroll-behavior:smooth}
+  body{background:#fff;color:var(--black);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;min-height:100vh;overflow-x:hidden;}
+
+  /* ===================== LANDING PAGE ===================== */
+  #landing-page{display:block;}
+  .landing-wrap{max-width:500px;margin:0 auto;padding:0 0 40px;}
+
+  /* HERO TOPO — metade branca metade vermelha */
+  .hero-top{
+    background:linear-gradient(to bottom, #fff 50%, var(--red) 50%);
+    padding:28px 16px 0;
+    text-align:center;
+  }
+  .hero-eyebrow{
+    display:inline-block;
+    background:var(--red);
+    color:#fff;
+    font-size:11px;font-weight:800;text-transform:uppercase;
+    letter-spacing:1.5px;padding:4px 14px;border-radius:3px;margin-bottom:12px;
+  }
+  .hero-headline{
+    font-size:clamp(22px,6vw,32px);
+    font-weight:900;line-height:1.15;
+    color:var(--black);
+    text-transform:uppercase;
+    margin-bottom:4px;
+  }
+  .hero-headline span{color:var(--red);}
+  .hero-headline-red{
+    font-size:clamp(22px,6vw,32px);
+    font-weight:900;line-height:1.15;
+    color:#fff;
+    text-transform:uppercase;
+    margin-bottom:16px;
+  }
+
+  /* VÍDEO REELS 9:16 */
+  .reel-wrap{
+    width:100%;
+    max-width:320px;
+    margin:0 auto;
+    position:relative;
+    border-radius:16px;
+    overflow:hidden;
+    box-shadow:0 8px 32px rgba(0,0,0,.3);
+    aspect-ratio:9/16;
+    background:#000;
+    border:3px solid #fff;
+  }
+  #landing-video{width:100%;height:100%;display:block;object-fit:cover;}
+  #landing-play-overlay{
+    position:absolute;inset:0;
+    display:flex;align-items:center;justify-content:center;
+    background:rgba(0,0,0,.3);cursor:pointer;
+  }
+  #landing-play-overlay svg{width:64px;height:64px;filter:drop-shadow(0 2px 8px rgba(0,0,0,.5));}
+  #landing-play-overlay.hidden{display:none;}
+
+  .reel-section{
+    background:var(--red);
+    padding:0 16px 28px;
+    text-align:center;
+  }
+
+  /* BOTÃO LANDING */
+  .btn-quiz{
+    display:block;
+    width:100%;
+    max-width:400px;
+    margin:22px auto 0;
+    background:#fff;
+    color:var(--red);
+    border:none;
+    border-radius:10px;
+    padding:18px 24px;
+    font-size:18px;font-weight:900;
+    text-transform:uppercase;letter-spacing:.5px;
+    cursor:pointer;
+    box-shadow:0 4px 20px rgba(0,0,0,.2);
+    animation:pulse-btn 2s infinite;
+  }
+  @keyframes pulse-btn{
+    0%,100%{box-shadow:0 4px 20px rgba(0,0,0,.2),0 0 0 0 rgba(255,255,255,.4)}
+    50%{box-shadow:0 4px 28px rgba(0,0,0,.3),0 0 0 10px rgba(255,255,255,0)}
+  }
+  .btn-quiz-sub{font-size:12px;color:rgba(255,255,255,.8);text-align:center;margin-top:8px;}
+
+  /* ===================== QUIZ ===================== */
+  #quiz-page{display:none;min-height:100vh;background:#f0faf5;}
+
+  .quiz-header{
+    background:#fff;
+    padding:14px 16px;
+    box-shadow:0 2px 8px rgba(0,0,0,.06);
+    position:sticky;top:0;z-index:10;
+  }
+  .quiz-progress-label{font-size:12px;font-weight:700;color:#888;text-align:center;margin-bottom:6px;text-transform:uppercase;letter-spacing:.5px;}
+  .quiz-bar-wrap{background:#e0e0e0;border-radius:999px;height:6px;width:100%;max-width:400px;margin:0 auto;}
+  .quiz-bar-fill{height:100%;background:var(--red);border-radius:999px;transition:width .4s ease;}
+
+  .quiz-body{max-width:480px;margin:0 auto;padding:24px 16px 40px;}
+
+  .quiz-step{display:none;}
+  .quiz-step.active{display:block;}
+
+  .quiz-question{
+    font-size:clamp(17px,4.5vw,22px);
+    font-weight:900;color:var(--black);
+    text-align:center;line-height:1.3;
+    margin-bottom:6px;
+  }
+  .quiz-sub{font-size:13px;color:#666;text-align:center;margin-bottom:20px;}
+
+  /* CARDS 2x2 */
+  .cards-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px;}
+  .q-card{
+    border:2.5px solid #e0e0e0;
+    border-radius:14px;
+    overflow:hidden;
+    cursor:pointer;
+    transition:border-color .2s,box-shadow .2s,transform .15s;
+    background:#fff;
+    position:relative;
+  }
+  .q-card:active{transform:scale(.97);}
+  .q-card.selected{border-color:var(--red);box-shadow:0 4px 16px rgba(232,0,13,.2);}
+  .q-card img{width:100%;aspect-ratio:1/1;object-fit:cover;display:block;}
+  .q-card-label{
+    padding:10px 8px;
+    display:flex;align-items:center;gap:8px;
+    font-size:14px;font-weight:700;color:var(--black);
+  }
+  .q-radio{
+    width:20px;height:20px;border-radius:50%;
+    border:2px solid #ccc;flex-shrink:0;
+    display:flex;align-items:center;justify-content:center;
+    transition:all .2s;background:#fff;
+  }
+  .q-card.selected .q-radio{background:var(--red);border-color:var(--red);}
+  .q-card.selected .q-radio::after{content:'';width:8px;height:8px;background:#fff;border-radius:50%;display:block;}
+
+  /* CARDS MULTI (etapa 5) */
+  .q-card-multi .q-check{
+    width:20px;height:20px;border-radius:5px;
+    border:2px solid #ccc;flex-shrink:0;
+    display:flex;align-items:center;justify-content:center;
+    transition:all .2s;background:#fff;
+  }
+  .q-card-multi.selected .q-check{background:var(--red);border-color:var(--red);}
+  .q-card-multi.selected .q-check::after{content:'✓';color:#fff;font-size:12px;font-weight:900;}
+
+  /* LIST OPTIONS (etapa 2) */
+  .options-list{display:flex;flex-direction:column;gap:10px;margin-bottom:20px;}
+  .opt-item{
+    background:#fff;border:2.5px solid #e0e0e0;border-radius:12px;
+    padding:14px 16px;display:flex;align-items:center;gap:12px;
+    cursor:pointer;font-size:15px;font-weight:600;color:var(--black);
+    transition:border-color .2s,box-shadow .2s;
+  }
+  .opt-item.selected{border-color:var(--red);box-shadow:0 4px 12px rgba(232,0,13,.15);}
+  .opt-emoji{font-size:22px;flex-shrink:0;}
+  .opt-radio{width:20px;height:20px;border-radius:50%;border:2px solid #ccc;margin-left:auto;flex-shrink:0;transition:all .2s;background:#fff;}
+  .opt-item.selected .opt-radio{background:var(--red);border-color:var(--red);}
+
+  /* INPUT ALTURA/PESO */
+  .input-wrap{margin-bottom:20px;}
+  .input-row{display:flex;gap:10px;align-items:flex-end;}
+  .input-field{
+    flex:1;border:2.5px solid #e0e0e0;border-radius:12px;
+    padding:16px 14px;font-size:22px;font-weight:700;
+    text-align:center;outline:none;color:var(--black);
+    transition:border-color .2s;background:#fff;
+    -webkit-appearance:none;
+  }
+  .input-field:focus{border-color:var(--red);}
+  .input-unit{font-size:16px;font-weight:700;color:#888;padding-bottom:18px;flex-shrink:0;}
+  .input-hint{font-size:12px;color:#aaa;text-align:center;margin-top:8px;}
+
+  /* BOTÃO CONTINUAR */
+  .btn-continuar{
+    width:100%;background:linear-gradient(135deg,var(--red),var(--red-dark));
+    color:#fff;border:none;border-radius:10px;padding:17px;
+    font-size:17px;font-weight:900;text-transform:uppercase;
+    cursor:pointer;letter-spacing:.5px;
+    box-shadow:0 4px 16px rgba(232,0,13,.35);
+    opacity:.4;transition:opacity .2s,box-shadow .2s;
+    pointer-events:none;
+  }
+  .btn-continuar.enabled{opacity:1;pointer-events:all;animation:pulse-btn2 2s infinite;}
+  @keyframes pulse-btn2{
+    0%,100%{box-shadow:0 4px 16px rgba(232,0,13,.35),0 0 0 0 rgba(232,0,13,.2)}
+    50%{box-shadow:0 4px 24px rgba(232,0,13,.55),0 0 0 8px rgba(232,0,13,0)}
+  }
+
+  /* LOADING / ANÁLISE */
+  #loading-page{display:none;min-height:100vh;background:#f0faf5;align-items:center;justify-content:center;flex-direction:column;padding:32px 16px;text-align:center;}
+  .loading-icon{font-size:52px;margin-bottom:16px;animation:bounce 1s infinite alternate;}
+  @keyframes bounce{from{transform:translateY(0)}to{transform:translateY(-10px)}}
+  .loading-title{font-size:20px;font-weight:900;color:var(--black);margin-bottom:8px;}
+  .loading-sub{font-size:14px;color:#666;margin-bottom:24px;}
+  .loading-bar-wrap{width:100%;max-width:320px;background:#e0e0e0;border-radius:999px;height:8px;margin:0 auto;}
+  .loading-bar-fill{height:100%;background:var(--red);border-radius:999px;width:0%;transition:width .3s ease;}
+  .loading-pct{font-size:13px;font-weight:700;color:var(--red);margin-top:8px;}
+
+  /* ===================== VSL PAGE ===================== */
+  #vsl-page{display:none;}
+  .main{max-width:860px;margin:0 auto;padding:0 12px 40px;}
+
+  .headline-wrap{padding:22px 8px 14px;text-align:center;}
+  .eyebrow{display:inline-block;background:var(--red);color:#fff;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:1.5px;padding:4px 12px;border-radius:3px;margin-bottom:10px;}
+  h1{font-size:clamp(20px,5.5vw,34px);font-weight:900;line-height:1.18;color:var(--black);text-align:center;text-transform:uppercase;}
+  h1 span{color:var(--red);}
+  .sub-headline{margin-top:8px;font-size:clamp(13px,3.5vw,16px);color:#444;font-weight:500;line-height:1.5;}
+
+  .trust-strip{display:flex;justify-content:center;gap:16px;flex-wrap:wrap;margin:10px 0 14px;font-size:12px;color:#555;font-weight:600;}
+  .trust-item{display:flex;align-items:center;gap:4px;}
+  .trust-item svg{width:14px;height:14px;fill:var(--red);}
+
+  .player-wrap{position:relative;background:#000;border-radius:8px;overflow:hidden;box-shadow:0 8px 32px rgba(0,0,0,.25);aspect-ratio:16/9;width:100%;border:3px solid var(--red);}
+  #main-video{width:100%;height:100%;display:block;object-fit:cover;}
+
+  .controls{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent,rgba(0,0,0,.85));padding:28px 12px 10px;display:flex;flex-direction:column;gap:6px;opacity:0;transition:opacity .25s;}
+  .player-wrap:hover .controls,.player-wrap.show-controls .controls{opacity:1;}
+  .progress-wrap{position:relative;height:5px;background:rgba(255,255,255,.25);border-radius:999px;cursor:pointer;}
+  .progress-fill{height:100%;background:var(--red);border-radius:999px;width:0%;transition:width .1s linear;}
+  .progress-thumb{position:absolute;right:-6px;top:50%;transform:translateY(-50%);width:14px;height:14px;background:#fff;border-radius:50%;box-shadow:0 0 4px rgba(0,0,0,.4);display:none;}
+  .progress-wrap:hover .progress-thumb{display:block;}
+  .ctrl-row{display:flex;align-items:center;gap:10px;}
+  .ctrl-btn{background:none;border:none;color:#fff;cursor:pointer;padding:2px;display:flex;align-items:center;justify-content:center;}
+  .ctrl-btn svg{width:20px;height:20px;fill:#fff;}
+  .time-display{color:#fff;font-size:12px;font-weight:600;font-variant-numeric:tabular-nums;flex:1;}
+  .vol-wrap{display:flex;align-items:center;gap:6px;}
+  .vol-slider{width:60px;-webkit-appearance:none;height:3px;border-radius:999px;background:rgba(255,255,255,.4);outline:none;}
+  .vol-slider::-webkit-slider-thumb{-webkit-appearance:none;width:12px;height:12px;border-radius:50%;background:#fff;cursor:pointer;}
+  .fullscreen-btn{margin-left:auto;}
+  #play-overlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.35);cursor:pointer;}
+  #play-overlay svg{width:68px;height:68px;filter:drop-shadow(0 2px 8px rgba(0,0,0,.5));}
+  #play-overlay.hidden{display:none;}
+  #pause-overlay{position:absolute;inset:0;cursor:pointer;opacity:0;}
+
+  #cta-btn{display:none;width:100%;margin:18px auto 0;max-width:500px;}
+  #cta-btn button{width:100%;background:linear-gradient(135deg,var(--red),var(--red-dark));color:#fff;border:none;border-radius:8px;padding:18px 24px;font-size:clamp(17px,4.5vw,22px);font-weight:900;text-transform:uppercase;letter-spacing:.5px;cursor:pointer;box-shadow:0 4px 20px rgba(232,0,13,.45);animation:pulse-btn2 2s infinite;position:relative;overflow:hidden;}
+  #cta-btn button::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.15),transparent);animation:shine 2.5s infinite;}
+  @keyframes shine{0%{transform:translateX(-100%)}100%{transform:translateX(100%)}}
+  .cta-sub{text-align:center;font-size:11px;color:#888;margin-top:6px;}
+  .cta-sub span{color:var(--red);font-weight:700;}
+
+  .urgency-strip{background:var(--gray-light);border-left:4px solid var(--red);border-radius:0 6px 6px 0;padding:10px 14px;margin:16px 0;font-size:13px;color:#333;font-weight:600;display:flex;align-items:center;gap:8px;}
+  .urgency-strip svg{width:18px;height:18px;fill:var(--red);flex-shrink:0;}
+
+  .section-title{font-size:clamp(16px,4vw,20px);font-weight:900;text-align:center;margin:24px 0 14px;text-transform:uppercase;}
+  .section-title span{color:var(--red);}
+  .comments{display:flex;flex-direction:column;gap:10px;}
+  .comment{background:var(--gray-light);border-radius:10px;padding:12px 14px;display:flex;gap:10px;align-items:flex-start;}
+  .avatar{width:40px;height:40px;border-radius:50%;background:var(--red);color:#fff;font-weight:900;font-size:15px;display:flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden;}
+  .avatar img{width:100%;height:100%;object-fit:cover;display:block;}
+  .comment-name{font-weight:800;font-size:13px;color:var(--black);}
+  .comment-text{font-size:13px;color:#444;margin-top:3px;line-height:1.45;}
+  .stars{color:var(--red);font-size:12px;margin-top:2px;}
+  .guarantee{border:2px solid var(--red);border-radius:10px;padding:16px;text-align:center;margin:20px 0;}
+  .guarantee-icon{font-size:36px;margin-bottom:6px;}
+  .guarantee h3{font-size:16px;font-weight:900;color:var(--red);text-transform:uppercase;}
+  .guarantee p{font-size:13px;color:#555;margin-top:6px;line-height:1.5;}
+  footer{text-align:center;font-size:11px;color:#aaa;padding:20px 12px;border-top:1px solid #eee;margin-top:30px;line-height:1.8;}
+
+  /* ===================== PIX PAGE ===================== */
+  #pix-page{display:none;min-height:100vh;background:#fff;}
+  .checkout-banner{width:100%;max-width:860px;margin:0 auto;aspect-ratio:1344/896;overflow:hidden;background:var(--gray-light);}
+  .checkout-banner img{width:100%;height:100%;display:block;object-fit:cover;}
+  .pix-header{background:var(--red);color:#fff;text-align:center;padding:16px 12px;}
+  .pix-header h2{font-size:clamp(16px,4.5vw,22px);font-weight:900;text-transform:uppercase;}
+  .pix-header p{font-size:13px;margin-top:4px;opacity:.9;}
+
+  .stepper{display:flex;align-items:center;justify-content:center;margin:18px 0 20px;}
+  .step-item{display:flex;flex-direction:column;align-items:center;gap:4px;}
+  .step-circle{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:900;border:2px solid #ddd;background:#fff;color:#bbb;transition:all .3s;}
+  .step-item.active .step-circle{background:var(--red);border-color:var(--red);color:#fff;}
+  .step-item.done .step-circle{background:var(--green);border-color:var(--green);color:#fff;}
+  .step-label{font-size:10px;font-weight:700;color:#bbb;text-transform:uppercase;letter-spacing:.4px;}
+  .step-item.active .step-label{color:var(--red);}
+  .step-item.done .step-label{color:var(--green);}
+  .step-line{width:48px;height:2px;background:#ddd;margin-bottom:14px;transition:background .3s;}
+  .step-line.done{background:var(--green);}
+
+  .aviso-banco{background:#FFF8E7;border:1.5px solid #F5A623;border-radius:10px;padding:12px 14px;margin:14px 0;display:none;}
+  .aviso-banco-titulo{font-size:13px;font-weight:900;color:#B8860B;display:flex;align-items:center;gap:6px;margin-bottom:5px;}
+  .aviso-banco p{font-size:12px;color:#7A6000;line-height:1.55;}
+  .aviso-banco strong{color:#B8860B;}
+
+  .scarcity-strip{background:var(--gray-light);border-left:4px solid var(--red);border-radius:0 6px 6px 0;padding:10px 14px;margin:16px 0 14px;font-size:13px;color:#333;font-weight:600;display:flex;align-items:center;gap:8px;line-height:1.4;}
+  .scarcity-strip svg{width:18px;height:18px;fill:var(--red);flex-shrink:0;}
+  .scarcity-strip strong{color:var(--red);font-size:15px;}
+  .scarcity-strip s{color:#999;}
+
+  .pix-body{max-width:480px;margin:0 auto;padding:20px 16px 40px;}
+  .pix-form-title{font-size:15px;font-weight:800;color:var(--black);margin-bottom:14px;text-align:center;text-transform:uppercase;}
+  .pix-form-title span{color:var(--red);}
+
+  .form-group{margin-bottom:14px;}
+  .form-group label{display:block;font-size:12px;font-weight:700;color:#333;margin-bottom:5px;text-transform:uppercase;letter-spacing:.5px;}
+  .form-group input{width:100%;border:2px solid #e0e0e0;border-radius:8px;padding:13px 14px;font-size:15px;outline:none;transition:border-color .2s;background:#fff;color:var(--black);-webkit-appearance:none;}
+  .form-group input:focus{border-color:var(--red);}
+  .form-group input::placeholder{color:#bbb;}
+
+  .btn-gerar{width:100%;background:linear-gradient(135deg,var(--red),var(--red-dark));color:#fff;border:none;border-radius:8px;padding:17px;font-size:17px;font-weight:900;text-transform:uppercase;cursor:pointer;margin-top:6px;box-shadow:0 4px 16px rgba(232,0,13,.4);animation:pulse-btn2 2s infinite;letter-spacing:.5px;}
+  .btn-gerar:disabled{opacity:.6;cursor:not-allowed;animation:none;}
+  .spinner{display:inline-block;width:16px;height:16px;border:2px solid rgba(255,255,255,.4);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite;vertical-align:middle;margin-right:8px;}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  #pix-error{display:none;background:#FFF0F0;border:1px solid var(--red);color:var(--red-dark);border-radius:8px;padding:12px 14px;font-size:13px;font-weight:600;margin-top:10px;text-align:center;}
+
+  #pix-result{display:none;margin-top:20px;}
+  .pix-steps{background:var(--gray-light);border-radius:10px;padding:16px;margin-bottom:16px;}
+  .pix-steps h4{font-size:14px;font-weight:900;color:var(--black);margin-bottom:10px;text-transform:uppercase;}
+  .pix-step{display:flex;gap:10px;align-items:flex-start;margin-bottom:8px;font-size:13px;color:#444;line-height:1.45;}
+  .step-num{background:var(--red);color:#fff;font-size:11px;font-weight:900;width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .qr-box{text-align:center;margin-bottom:16px;}
+  .qr-box img{width:min(220px,70vw);height:auto;border:3px solid var(--red);border-radius:10px;padding:6px;background:#fff;}
+  .qr-label{font-size:12px;font-weight:700;color:#555;margin-top:6px;text-transform:uppercase;letter-spacing:.5px;}
+  .pix-code-box{background:#f9f9f9;border:2px dashed var(--red);border-radius:8px;padding:12px;margin-bottom:12px;}
+  .pix-code-text{font-size:10.5px;color:#333;word-break:break-all;line-height:1.6;font-family:monospace;}
+  .btn-copiar{width:100%;background:#fff;color:var(--red);border:2px solid var(--red);border-radius:8px;padding:14px;font-size:15px;font-weight:900;cursor:pointer;text-transform:uppercase;letter-spacing:.5px;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:8px;}
+  .btn-copiar:active{background:var(--red);color:#fff;}
+  .btn-copiar svg{width:18px;height:18px;}
+  .aguardando{display:flex;align-items:center;justify-content:center;gap:8px;font-size:14px;font-weight:700;color:#555;margin-top:14px;}
+  .pulse-dot{width:12px;height:12px;background:var(--red);border-radius:50%;animation:pdot 1.2s infinite;flex-shrink:0;}
+  @keyframes pdot{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.3;transform:scale(.7)}}
+
+  #pix-aprovado{display:none;text-align:center;padding:24px 16px;}
+  #pix-aprovado .check-icon{font-size:56px;margin-bottom:10px;}
+  #pix-aprovado h3{font-size:18px;font-weight:900;color:var(--green);text-transform:uppercase;margin-bottom:8px;}
+  #pix-aprovado p{font-size:14px;color:#444;line-height:1.5;}
+
+  .bump-wrap{margin:16px 0;}
+  .bump-card{border:2.5px dashed var(--red);border-radius:12px;padding:14px;background:#fff9f9;cursor:pointer;transition:all .2s;user-select:none;}
+  .bump-card.selected{border-style:solid;background:#fff0f0;box-shadow:0 4px 16px rgba(232,0,13,.15);}
+  .bump-label{display:inline-block;background:var(--red);color:#fff;font-size:10px;font-weight:900;text-transform:uppercase;letter-spacing:1px;padding:3px 10px;border-radius:3px;margin-bottom:10px;}
+  .bump-inner{display:flex;gap:12px;align-items:center;}
+  .bump-img{width:72px;height:100px;object-fit:cover;object-position:center top;border-radius:8px;flex-shrink:0;border:2px solid #f0e0e0;}
+  .bump-info{flex:1;}
+  .bump-title{font-size:14px;font-weight:900;color:var(--black);text-transform:uppercase;line-height:1.2;margin-bottom:4px;}
+  .bump-desc{font-size:12px;color:#555;line-height:1.4;margin-bottom:6px;}
+  .bump-price{font-size:13px;font-weight:900;color:var(--red);}
+  .bump-price s{color:#bbb;font-weight:400;font-size:11px;margin-right:4px;}
+  .bump-check{width:24px;height:24px;border:2.5px solid #ccc;border-radius:6px;flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all .2s;background:#fff;}
+  .bump-card.selected .bump-check{background:var(--red);border-color:var(--red);}
+  .bump-check svg{width:14px;height:14px;fill:#fff;opacity:0;transition:opacity .2s;}
+  .bump-card.selected .bump-check svg{opacity:1;}
+  .bump-footer{margin-top:10px;font-size:11px;color:#888;text-align:center;font-weight:600;}
+  .bump-footer span{color:var(--red);}
+  .total-wrap{display:flex;justify-content:space-between;align-items:center;background:var(--gray-light);border-radius:8px;padding:10px 14px;margin:12px 0;font-size:14px;font-weight:700;color:var(--black);}
+  .total-wrap .total-val{color:var(--red);font-size:16px;font-weight:900;}
+  .gatilhos-wrap{display:flex;flex-direction:column;gap:7px;margin:14px 0 4px;background:var(--gray-light);border-radius:10px;padding:12px 14px;}
+  .gatilho-item{font-size:12px;font-weight:600;color:#444;display:flex;gap:6px;align-items:flex-start;line-height:1.4;}
+  .gatilho-item span{flex:1;}
+
+  #exit-modal,#exit-modal-checkout{display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:9999;align-items:center;justify-content:center;padding:16px;}
+  #exit-modal.show,#exit-modal-checkout.show{display:flex;}
+  .modal-box{background:#fff;border-radius:14px;padding:28px 22px;max-width:380px;width:100%;text-align:center;animation:modal-in .3s ease;}
+  @keyframes modal-in{from{transform:scale(.85);opacity:0}to{transform:scale(1);opacity:1}}
+  .modal-icon{font-size:42px;margin-bottom:8px;}
+  .modal-box h3{font-size:18px;font-weight:900;color:var(--red);text-transform:uppercase;margin-bottom:8px;}
+  .modal-box p{font-size:14px;color:#444;line-height:1.55;margin-bottom:18px;}
+  .modal-box p strong{color:var(--red);}
+  .modal-btns{display:flex;flex-direction:column;gap:10px;}
+  .btn-modal-stay{background:linear-gradient(135deg,var(--red),var(--red-dark));color:#fff;border:none;border-radius:8px;padding:15px;font-size:15px;font-weight:900;cursor:pointer;text-transform:uppercase;}
+  .btn-modal-leave{background:none;color:#999;border:none;font-size:12px;cursor:pointer;text-decoration:underline;}
+  #copy-toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(60px);background:#222;color:#fff;padding:10px 20px;border-radius:999px;font-size:13px;font-weight:700;z-index:9999;transition:transform .3s ease;pointer-events:none;}
+  #copy-toast.show{transform:translateX(-50%) translateY(0);}
+  ::-webkit-scrollbar{width:4px;}
+  ::-webkit-scrollbar-thumb{background:#ddd;border-radius:999px;}
+</style>
+</head>
+<body>
+
+<!-- ==================== LANDING PAGE ==================== -->
+<div id="landing-page">
+  <div class="landing-wrap">
+    <div class="hero-top">
+      <span class="eyebrow">⚠️ Atenção Mulheres</span>
+      <div class="hero-headline">Veja o truque usado <span>por elas</span> para</div>
+      <div class="hero-headline-red">FIRMAR A BARRIGA</div>
+      <div class="reel-section">
+        <div class="reel-wrap">
+          <video id="landing-video" preload="metadata" playsinline webkit-playsinline loop>
+            <source src="https://metodotripe.shop/wp-content/uploads/2026/06/Titulo.mp4" type="video/mp4">
+          </video>
+          <div id="landing-play-overlay">
+            <svg viewBox="0 0 100 100" fill="none">
+              <circle cx="50" cy="50" r="50" fill="rgba(232,0,13,0.9)"/>
+              <polygon points="38,28 38,72 72,50" fill="white"/>
+            </svg>
+          </div>
+        </div>
+        <button class="btn-quiz" onclick="iniciarQuiz()">🎯 FAZER TESTE RÁPIDO</button>
+        <p class="btn-quiz-sub">Descubra seu perfil em menos de 1 minuto</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== QUIZ ==================== -->
+<div id="quiz-page">
+  <div class="quiz-header">
+    <div class="quiz-progress-label" id="quiz-progress-label">Etapa 1 de 5</div>
+    <div class="quiz-bar-wrap"><div class="quiz-bar-fill" id="quiz-bar" style="width:20%"></div></div>
+  </div>
+  <div class="quiz-body">
+
+    <!-- ETAPA 1 — Idade -->
+    <div class="quiz-step active" id="step-1">
+      <div class="quiz-question">Qual é a sua faixa de idade?</div>
+      <div class="quiz-sub">Selecione uma opção para continuar</div>
+      <div class="cards-grid">
+        <div class="q-card" onclick="selectCard(this,'q1')">
+          <img src="https://metodotripe.shop/wp-content/uploads/2026/06/hADrjv-1.webp" alt="18 a 29">
+          <div class="q-card-label"><span class="q-radio"></span>18 a 29</div>
+        </div>
+        <div class="q-card" onclick="selectCard(this,'q1')">
+          <img src="https://metodotripe.shop/wp-content/uploads/2026/06/hADrjv-1.webp" alt="30 a 39">
+          <div class="q-card-label"><span class="q-radio"></span>30 a 39</div>
+        </div>
+        <div class="q-card" onclick="selectCard(this,'q1')">
+          <img src="https://metodotripe.shop/wp-content/uploads/2026/06/hADrjv-1.webp" alt="40 a 49">
+          <div class="q-card-label"><span class="q-radio"></span>40 a 49</div>
+        </div>
+        <div class="q-card" onclick="selectCard(this,'q1')">
+          <img src="https://metodotripe.shop/wp-content/uploads/2026/06/hADrjv-1.webp" alt="+50">
+          <div class="q-card-label"><span class="q-radio"></span>+50</div>
+        </div>
+      </div>
+      <button class="btn-continuar" id="btn-1" onclick="nextStep(2)">Continuar →</button>
+    </div>
+
+    <!-- ETAPA 2 — Tempo -->
+    <div class="quiz-step" id="step-2">
+      <div class="quiz-question">Há quanto tempo você convive com essa localizada?</div>
+      <div class="quiz-sub">Seja honesta, isso é só para te ajudar 💙</div>
+      <div class="options-list">
+        <div class="opt-item" onclick="selectOpt(this,'q2')">
+          <span class="opt-emoji">😅</span><span>Menos de 1 ano</span><span class="opt-radio"></span>
+        </div>
+        <div class="opt-item" onclick="selectOpt(this,'q2')">
+          <span class="opt-emoji">😣</span><span>Entre 1 a 3 anos</span><span class="opt-radio"></span>
+        </div>
+        <div class="opt-item" onclick="selectOpt(this,'q2')">
+          <span class="opt-emoji">😥</span><span>Entre 3 a 5 anos</span><span class="opt-radio"></span>
+        </div>
+        <div class="opt-item" onclick="selectOpt(this,'q2')">
+          <span class="opt-emoji">😮</span><span>Mais de 5 anos</span><span class="opt-radio"></span>
+        </div>
+      </div>
+      <button class="btn-continuar" id="btn-2" onclick="nextStep(3)">Continuar →</button>
+    </div>
+
+    <!-- ETAPA 3 — Altura -->
+    <div class="quiz-step" id="step-3">
+      <div class="quiz-question">Qual é a sua altura?</div>
+      <div class="quiz-sub">Isso nos ajuda a personalizar seu resultado</div>
+      <div class="input-wrap">
+        <div class="input-row">
+          <input type="number" class="input-field" id="inp-altura" placeholder="165" min="100" max="220" oninput="checkInput('inp-altura','btn-3',100,220)">
+          <span class="input-unit">cm</span>
+        </div>
+        <div class="input-hint">Ex: 165 para 1,65m</div>
+      </div>
+      <button class="btn-continuar" id="btn-3" onclick="nextStep(4)">Continuar →</button>
+    </div>
+
+    <!-- ETAPA 4 — Peso -->
+    <div class="quiz-step" id="step-4">
+      <div class="quiz-question">Qual é o seu peso atual?</div>
+      <div class="quiz-sub">Não se preocupe, essa informação é confidencial 🔒</div>
+      <div class="input-wrap">
+        <div class="input-row">
+          <input type="number" class="input-field" id="inp-peso" placeholder="65" min="30" max="250" oninput="checkInput('inp-peso','btn-4',30,250)">
+          <span class="input-unit">kg</span>
+        </div>
+        <div class="input-hint">Ex: 65 para 65 quilos</div>
+      </div>
+      <button class="btn-continuar" id="btn-4" onclick="nextStep(5)">Continuar →</button>
+    </div>
+
+    <!-- ETAPA 5 — Localizada -->
+    <div class="quiz-step" id="step-5">
+      <div class="quiz-question">Como você descreveria a sua localizada?</div>
+      <div class="quiz-sub">Marque todos que se aplicam e clique em continuar</div>
+      <div class="cards-grid">
+        <div class="q-card q-card-multi" onclick="selectMulti(this,'q5')">
+          <img src="https://metodotripe.shop/wp-content/uploads/2026/06/hADrjv-1.webp" alt="Pequena">
+          <div class="q-card-label"><span class="q-check"></span>Pequena</div>
+        </div>
+        <div class="q-card q-card-multi" onclick="selectMulti(this,'q5')">
+          <img src="https://metodotripe.shop/wp-content/uploads/2026/06/hADrjv-1.webp" alt="Média">
+          <div class="q-card-label"><span class="q-check"></span>Média</div>
+        </div>
+        <div class="q-card q-card-multi" onclick="selectMulti(this,'q5')">
+          <img src="https://metodotripe.shop/wp-content/uploads/2026/06/hADrjv-1.webp" alt="Grande">
+          <div class="q-card-label"><span class="q-check"></span>Grande</div>
+        </div>
+        <div class="q-card q-card-multi" onclick="selectMulti(this,'q5')">
+          <img src="https://metodotripe.shop/wp-content/uploads/2026/06/hADrjv-1.webp" alt="Muito grande">
+          <div class="q-card-label"><span class="q-check"></span>Muito grande</div>
+        </div>
+      </div>
+      <div style="font-size:11px;color:#888;text-align:center;margin:-10px 0 12px;">
+        Pequena — sei que está lá, mas me incomoda<br>
+        Média — fica visível em certas roupas<br>
+        Grande — não consigo usar as roupas que quero<br>
+        Muito grande — me sinto presa neste corpo
+      </div>
+      <button class="btn-continuar" id="btn-5" onclick="finalizarQuiz()">Continuar →</button>
+    </div>
+
+  </div>
+</div>
+
+<!-- ==================== LOADING ==================== -->
+<div id="loading-page" style="display:none;min-height:100vh;background:#f0faf5;display:none;align-items:center;justify-content:center;flex-direction:column;padding:32px 16px;text-align:center;">
+  <div class="loading-icon">🔬</div>
+  <div class="loading-title">Analisando seu perfil...</div>
+  <div class="loading-sub">Estamos preparando seu resultado personalizado</div>
+  <div class="loading-bar-wrap"><div class="loading-bar-fill" id="loading-bar"></div></div>
+  <div class="loading-pct" id="loading-pct">0%</div>
+</div>
+
+<!-- ==================== VSL PAGE ==================== -->
+<div id="vsl-page">
+  <div class="main">
+    <div class="headline-wrap">
+      <span class="eyebrow">⚠️ Atenção Mulheres</span>
+      <h1>O <span>Truque Secreto</span> Para Firmar a Barriga<br><span>Que Elas Não Contam</span></h1>
+      <p class="sub-headline">Assista o vídeo abaixo até o final e descubra antes que seja removido da internet</p>
+    </div>
+
+    <div class="trust-strip">
+      <span class="trust-item"><svg viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>+32.000 mulheres</span>
+      <span class="trust-item"><svg viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>Método comprovado</span>
+      <span class="trust-item"><svg viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>100% Natural</span>
+    </div>
+
+    <div class="player-wrap" id="player-wrap">
+      <video id="main-video" preload="metadata" playsinline webkit-playsinline>
+        <source src="https://metodotripe.shop/wp-content/uploads/2026/06/Titulo-1.mp4" type="video/mp4">
+      </video>
+      <div id="play-overlay">
+        <svg viewBox="0 0 100 100" fill="none">
+          <circle cx="50" cy="50" r="50" fill="rgba(232,0,13,0.9)"/>
+          <polygon points="38,28 38,72 72,50" fill="white"/>
+        </svg>
+      </div>
+      <div id="pause-overlay"></div>
+      <div class="controls">
+        <div class="progress-wrap" id="progress-wrap">
+          <div class="progress-fill" id="progress-fill"><div class="progress-thumb"></div></div>
+        </div>
+        <div class="ctrl-row">
+          <button class="ctrl-btn" id="play-btn"><svg id="play-icon" viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></button>
+          <span class="time-display" id="time-display">0:00 / 9:40</span>
+          <div class="vol-wrap">
+            <button class="ctrl-btn" id="mute-btn"><svg id="vol-icon" viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg></button>
+            <input type="range" class="vol-slider" id="vol-slider" min="0" max="1" step="0.05" value="1">
+          </div>
+          <button class="ctrl-btn fullscreen-btn" id="fs-btn"><svg viewBox="0 0 24 24"><path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/></svg></button>
+        </div>
+      </div>
+    </div>
+
+    <div id="cta-btn">
+      <button onclick="goToPix()">🔓 QUERO FIRMAR MINHA BARRIGA AGORA</button>
+      <p class="cta-sub">⚡ <span>Oferta exclusiva</span> para quem assistiu até o final • Vagas limitadas</p>
+    </div>
+
+    <div class="urgency-strip">
+      <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg>
+      <span>🔥 Assista o vídeo <strong>até o final</strong> para descobrir o truque completo</span>
+    </div>
+
+    <div class="section-title">O que estão <span>dizendo</span></div>
+    <div class="comments">
+      <div class="comment">
+        <div class="avatar"><img src="https://metodotripe.shop/wp-content/uploads/2026/06/f6f75b3cecb0c630eaa4efefccf2109f.jpg" alt="Ana C."></div>
+        <div class="comment-body">
+          <div class="comment-name">Ana C. — SP</div>
+          <div class="stars">★★★★★</div>
+          <div class="comment-text">Em 3 semanas já senti a barriga mais firme. Nunca achei que algo tão simples pudesse funcionar assim. Recomendo de olhos fechados!</div>
+        </div>
+      </div>
+      <div class="comment">
+        <div class="avatar"><img src="https://metodotripe.shop/wp-content/uploads/2026/06/CjKzp-o4_400x400.jpg" alt="Patrícia M."></div>
+        <div class="comment-body">
+          <div class="comment-name">Patrícia M. — RJ</div>
+          <div class="stars">★★★★★</div>
+          <div class="comment-text">Tentei dieta, academia, tudo. Esse método foi o único que realmente atacou a localizada. Voltei a usar blusinha curta depois de anos!</div>
+        </div>
+      </div>
+      <div class="comment">
+        <div class="avatar"><img src="https://metodotripe.shop/wp-content/uploads/2026/06/5bd1ed354dd667063e2fafd36473dd27.jpg" alt="Fernanda L."></div>
+        <div class="comment-body">
+          <div class="comment-name">Fernanda L. — MG</div>
+          <div class="stars">★★★★★</div>
+          <div class="comment-text">Resultado muito além do que esperava. Fácil de aplicar no dia a dia e sem precisar de academia. Melhor investimento que fiz esse ano.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="guarantee">
+      <div class="guarantee-icon">🛡️</div>
+      <h3>Garantia Total de 7 Dias</h3>
+      <p>Se por qualquer motivo você não estiver 100% satisfeita, devolvemos seu dinheiro sem perguntas. Risco zero para você.</p>
+    </div>
+
+    <footer>
+      © 2026 Método Barriga Firme — Todos os direitos reservados<br>
+      Este produto não substitui orientação médica profissional.<br>
+      Os resultados podem variar de pessoa para pessoa.
+    </footer>
+  </div>
+</div>
+
+<!-- ==================== PIX PAGE ==================== -->
+<div id="pix-page">
+  <div class="checkout-banner">
+    <img src="https://metodotripe.shop/wp-content/uploads/2026/06/ChatGPT-Image-14-de-jun.-de-2026-23_58_46.png" alt="">
+  </div>
+  <div class="pix-header">
+    <h2>🔓 Acesso Liberado — Última Etapa</h2>
+    <p>Você está a 1 passo de receber o método completo no seu e-mail</p>
+  </div>
+  <div class="pix-body">
+    <div class="stepper">
+      <div class="step-item done" id="step1"><div class="step-circle">✓</div><span class="step-label">Dados</span></div>
+      <div class="step-line" id="line1"></div>
+      <div class="step-item active" id="step2"><div class="step-circle">2</div><span class="step-label">Pagamento</span></div>
+      <div class="step-line" id="line2"></div>
+      <div class="step-item" id="step3"><div class="step-circle">3</div><span class="step-label">Acesso</span></div>
+    </div>
+
+    <div class="scarcity-strip">
+      <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg>
+      <span>⚡ Oferta de lançamento: de <s>R$ 77,00</s> por apenas <strong>R$ 9,90</strong> — condição válida só nesta página</span>
+    </div>
+
+    <div class="pix-form-title">Preencha os dados para <span>liberar o método completo</span></div>
+
+    <div id="pix-form">
+      <div class="form-group"><label>Nome completo</label><input type="text" id="inp-nome" placeholder="Seu nome completo" autocomplete="name"></div>
+      <div class="form-group"><label>E-mail</label><input type="email" id="inp-email" placeholder="seuemail@gmail.com" autocomplete="email"></div>
+      <div class="form-group"><label>WhatsApp</label><input type="tel" id="inp-wpp" placeholder="(11) 99999-9999" autocomplete="tel"></div>
+      <div class="form-group"><label>CPF</label><input type="tel" id="inp-cpf" placeholder="000.000.000-00" autocomplete="off"></div>
+
+      <div class="bump-wrap">
+        <div class="bump-card" id="bump-card" onclick="toggleBump('bump1')">
+          <div class="bump-label">⚡ Oferta especial — Adicione ao seu pedido</div>
+          <div class="bump-inner">
+            <img class="bump-img" src="https://metodotripe.shop/wp-content/uploads/2026/06/ChatGPT-Image-15-de-jun.-de-2026-20_31_49.png" alt="Bônus">
+            <div class="bump-info">
+              <div class="bump-title">Guia de Receitas Detox</div>
+              <div class="bump-desc">7 receitas que potencializam os resultados em até 2x mais rápido</div>
+              <div class="bump-price"><s>R$ 29,90</s> apenas R$ 4,97</div>
+            </div>
+            <div class="bump-check" id="bump-check-1"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+          </div>
+          <div class="bump-footer">Clique no card para <span>adicionar ao seu pedido</span></div>
+        </div>
+      </div>
+
+      <div class="bump-wrap">
+        <div class="bump-card" id="bump-card-2" onclick="toggleBump('bump2')">
+          <div class="bump-label">🔥 Mais vendido — Aproveite enquanto há vagas</div>
+          <div class="bump-inner">
+            <img class="bump-img" src="https://metodotripe.shop/wp-content/uploads/2026/06/ChatGPT-Image-16-de-jun.-de-2026-19_56_13.png" alt="Bônus 2">
+            <div class="bump-info">
+              <div class="bump-title">Treino 15 Min em Casa</div>
+              <div class="bump-desc">Sequência de exercícios focada na barriga — sem academia, sem equipamentos</div>
+              <div class="bump-price"><s>R$ 29,90</s> apenas R$ 4,97</div>
+            </div>
+            <div class="bump-check" id="bump-check-2"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+          </div>
+          <div class="bump-footer">Clique no card para <span>adicionar ao seu pedido</span></div>
+        </div>
+      </div>
+
+      <div class="gatilhos-wrap">
+        <div class="gatilho-item">🔒 <span>Compra 100% segura — criptografia SSL</span></div>
+        <div class="gatilho-item">⚡ <span>Acesso imediato após confirmação do PIX</span></div>
+        <div class="gatilho-item">🛡️ <span>Garantia de 7 dias — devolução sem perguntas</span></div>
+        <div class="gatilho-item">👩‍⚕️ <span>Método validado por especialistas — 100% natural</span></div>
+        <div class="gatilho-item">🔥 <span>+32.000 mulheres já transformaram sua barriga</span></div>
+      </div>
+
+      <div class="total-wrap">
+        <span>Total a pagar:</span>
+        <span class="total-val" id="total-display">R$ 9,90</span>
+      </div>
+
+      <button class="btn-gerar" id="btn-gerar" onclick="gerarPix()">🔓 LIBERAR MÉTODO COMPLETO — R$ 9,90</button>
+      <div id="pix-error"></div>
+    </div>
+
+    <div id="pix-result">
+      <div class="aviso-banco" id="aviso-banco">
+        <div class="aviso-banco-titulo">💡 Dica antes de pagar</div>
+        <p>Alguns bancos exibem um alerta automático em pagamentos PIX para produtos digitais — isso é um <strong>aviso padrão do sistema bancário</strong>, não tem relação com o nosso produto.<br><br>O método é processado pelo <strong>Mercado Pago</strong>, maior plataforma de pagamentos da América Latina. Seu pagamento é <strong>100% seguro</strong>. ✅</p>
+      </div>
+      <div class="pix-steps">
+        <h4>📋 Como pagar com PIX:</h4>
+        <div class="pix-step"><span class="step-num">1</span><span>Abra o aplicativo do seu banco</span></div>
+        <div class="pix-step"><span class="step-num">2</span><span>Toque em <strong>PIX → Pagar → Copia e Cola</strong> ou escaneie o QR Code</span></div>
+        <div class="pix-step"><span class="step-num">3</span><span>Cole o código ou aponte a câmera para o QR Code</span></div>
+        <div class="pix-step"><span class="step-num">4</span><span>Confirme e aguarde a liberação no seu e-mail</span></div>
+      </div>
+      <div class="qr-box">
+        <img id="pix-qr-img" src="" alt="QR Code PIX" loading="lazy">
+        <p class="qr-label">Escaneie o QR Code</p>
+      </div>
+      <div class="pix-code-box"><div class="pix-code-text" id="pix-code-display"></div></div>
+      <button class="btn-copiar" onclick="copiarCodigo()">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
+        COPIAR CÓDIGO PIX
+      </button>
+      <div class="aguardando" id="aguardando"><span class="pulse-dot"></span>Aguardando pagamento...</div>
+    </div>
+
+    <div id="pix-aprovado">
+      <div class="check-icon">✅</div>
+      <h3>Pagamento aprovado!</h3>
+      <p>Seu acesso foi liberado. Você receberá as instruções no e-mail informado em poucos minutos.</p>
+    </div>
+  </div>
+</div>
+
+<!-- EXIT MODAL VSL -->
+<div id="exit-modal">
+  <div class="modal-box">
+    <div class="modal-icon">⚠️</div>
+    <h3>Espera! Não saia ainda</h3>
+    <p><strong>Este vídeo só estará disponível HOJE.</strong><br><br>Se você fechar agora, perderá o truque que já ajudou +32.000 mulheres a firmar a barriga.</p>
+    <div class="modal-btns">
+      <button class="btn-modal-stay" onclick="closeModal()">🎬 CONTINUAR ASSISTINDO</button>
+      <button class="btn-modal-leave" onclick="closeModal()">Sair mesmo assim</button>
+    </div>
+  </div>
+</div>
+
+<!-- EXIT MODAL CHECKOUT -->
+<div id="exit-modal-checkout">
+  <div class="modal-box">
+    <div class="modal-icon">🔥</div>
+    <h3>Sua oferta vai expirar!</h3>
+    <p>Você está prestes a perder acesso ao método por apenas <strong>R$ 9,90</strong>.<br><br>Esta condição não estará disponível se você sair agora.</p>
+    <div class="modal-btns">
+      <button class="btn-modal-stay" onclick="closeModalCheckout()">✅ QUERO GARANTIR MINHA OFERTA</button>
+      <button class="btn-modal-leave" onclick="closeModalCheckout()">Perder minha oferta</button>
+    </div>
+  </div>
+</div>
+
+<div id="copy-toast">✅ Código copiado!</div>
+
+<script>
+// ===== LANDING VIDEO =====
+const landingVideo=document.getElementById('landing-video');
+const landingOverlay=document.getElementById('landing-play-overlay');
+landingOverlay.addEventListener('click',()=>{landingVideo.play();landingOverlay.classList.add('hidden');});
+
+// ===== QUIZ =====
+let currentStep=1;
+const totalSteps=5;
+
+function iniciarQuiz(){
+  document.getElementById('landing-page').style.display='none';
+  document.getElementById('quiz-page').style.display='block';
+  window.scrollTo(0,0);
+}
+
+function updateProgress(step){
+  const pct=Math.round((step/totalSteps)*100);
+  document.getElementById('quiz-bar').style.width=pct+'%';
+  document.getElementById('quiz-progress-label').textContent='Etapa '+step+' de '+totalSteps;
+}
+
+function selectCard(el,group){
+  const step=el.closest('.quiz-step');
+  step.querySelectorAll('.q-card:not(.q-card-multi)').forEach(c=>c.classList.remove('selected'));
+  el.classList.add('selected');
+  const stepNum=step.id.replace('step-','');
+  document.getElementById('btn-'+stepNum).classList.add('enabled');
+}
+
+function selectOpt(el,group){
+  const step=el.closest('.quiz-step');
+  step.querySelectorAll('.opt-item').forEach(o=>o.classList.remove('selected'));
+  el.classList.add('selected');
+  const stepNum=step.id.replace('step-','');
+  document.getElementById('btn-'+stepNum).classList.add('enabled');
+}
+
+function selectMulti(el){
+  el.classList.toggle('selected');
+  const step=el.closest('.quiz-step');
+  const hasSelected=step.querySelector('.q-card-multi.selected');
+  const stepNum=step.id.replace('step-','');
+  const btn=document.getElementById('btn-'+stepNum);
+  if(hasSelected){btn.classList.add('enabled');}else{btn.classList.remove('enabled');}
+}
+
+function checkInput(inputId,btnId,min,max){
+  const val=parseFloat(document.getElementById(inputId).value);
+  const btn=document.getElementById(btnId);
+  if(val>=min&&val<=max){btn.classList.add('enabled');}else{btn.classList.remove('enabled');}
+}
+
+function nextStep(next){
+  document.getElementById('step-'+currentStep).classList.remove('active');
+  currentStep=next;
+  document.getElementById('step-'+currentStep).classList.add('active');
+  updateProgress(currentStep);
+  window.scrollTo(0,0);
+}
+
+function finalizarQuiz(){
+  document.getElementById('quiz-page').style.display='none';
+  const lp=document.getElementById('loading-page');
+  lp.style.display='flex';
+  window.scrollTo(0,0);
+  let pct=0;
+  const bar=document.getElementById('loading-bar');
+  const pctEl=document.getElementById('loading-pct');
+  const interval=setInterval(()=>{
+    pct+=Math.random()*8+2;
+    if(pct>=100){pct=100;clearInterval(interval);setTimeout(()=>{lp.style.display='none';document.getElementById('vsl-page').style.display='block';window.scrollTo(0,0);},600);}
+    bar.style.width=Math.min(pct,100)+'%';
+    pctEl.textContent=Math.floor(Math.min(pct,100))+'%';
+  },200);
+}
+
+// ===== VSL PLAYER =====
+const VIDEO_DURATION=580; // 9:40
+const video=document.getElementById('main-video');
+const playerWrap=document.getElementById('player-wrap');
+const playOverlay=document.getElementById('play-overlay');
+const progressFill=document.getElementById('progress-fill');
+const progressWrap=document.getElementById('progress-wrap');
+const playBtn=document.getElementById('play-btn');
+const playIcon=document.getElementById('play-icon');
+const volSlider=document.getElementById('vol-slider');
+const muteBtn=document.getElementById('mute-btn');
+const volIcon=document.getElementById('vol-icon');
+const timeDisplay=document.getElementById('time-display');
+const ctaBtn=document.getElementById('cta-btn');
+
+let ctaShown=false,controlsTimer,currentPixCode='',pollInterval=null;
+
+function fmtTime(s){s=Math.floor(s);return Math.floor(s/60)+':'+String(s%60).padStart(2,'0');}
+function playVideo(){video.play();playIcon.innerHTML='<rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/>';playOverlay.classList.add('hidden');}
+function pauseVideo(){video.pause();playIcon.innerHTML='<polygon points="5,3 19,12 5,21"/>';}
+
+playOverlay.addEventListener('click',()=>{playVideo();showControlsTemp();});
+document.getElementById('pause-overlay').addEventListener('click',()=>{if(video.paused)playVideo();else pauseVideo();showControlsTemp();});
+playBtn.addEventListener('click',()=>{if(video.paused)playVideo();else pauseVideo();showControlsTemp();});
+
+function showControlsTemp(){playerWrap.classList.add('show-controls');clearTimeout(controlsTimer);controlsTimer=setTimeout(()=>playerWrap.classList.remove('show-controls'),2500);}
+playerWrap.addEventListener('mousemove',showControlsTemp);
+playerWrap.addEventListener('touchstart',showControlsTemp,{passive:true});
+
+video.addEventListener('timeupdate',()=>{
+  const pct=(video.currentTime/VIDEO_DURATION)*100;
+  progressFill.style.width=Math.min(pct,100)+'%';
+  timeDisplay.textContent=fmtTime(video.currentTime)+' / 9:40';
+  if(video.currentTime>=VIDEO_DURATION&&!ctaShown){ctaShown=true;ctaBtn.style.display='block';ctaBtn.scrollIntoView({behavior:'smooth',block:'nearest'});}
+});
+
+progressWrap.addEventListener('click',(e)=>{const r=progressWrap.getBoundingClientRect();video.currentTime=((e.clientX-r.left)/r.width)*VIDEO_DURATION;showControlsTemp();});
+progressWrap.addEventListener('touchstart',(e)=>{const r=progressWrap.getBoundingClientRect();video.currentTime=Math.max(0,Math.min(((e.touches[0].clientX-r.left)/r.width)*VIDEO_DURATION,VIDEO_DURATION));showControlsTemp();},{passive:true});
+volSlider.addEventListener('input',()=>{video.volume=volSlider.value;video.muted=video.volume===0;updateVolIcon();});
+muteBtn.addEventListener('click',()=>{video.muted=!video.muted;volSlider.value=video.muted?0:video.volume||1;updateVolIcon();});
+function updateVolIcon(){if(video.muted||video.volume===0){volIcon.innerHTML='<path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/>';}else{volIcon.innerHTML='<path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/>';}}
+document.getElementById('fs-btn').addEventListener('click',()=>{if(document.fullscreenElement)document.exitFullscreen();else playerWrap.requestFullscreen&&playerWrap.requestFullscreen();});
+
+// ===== CHECKOUT =====
+function goToPix(){video.pause();document.getElementById('vsl-page').style.display='none';document.getElementById('pix-page').style.display='block';window.scrollTo(0,0);}
+function showPixError(msg){const e=document.getElementById('pix-error');e.textContent=msg;e.style.display='block';}
+function hidePixError(){document.getElementById('pix-error').style.display='none';}
+
+const PRECO_BASE=9.90,PRECO_BUMP1=4.97,PRECO_BUMP2=4.97;
+let bump1=false,bump2=false;
+function calcTotal(){return parseFloat((PRECO_BASE+(bump1?PRECO_BUMP1:0)+(bump2?PRECO_BUMP2:0)).toFixed(2));}
+function totalStr(){return calcTotal().toFixed(2).replace('.',',');}
+function atualizarTotalUI(){document.getElementById('total-display').textContent='R$ '+totalStr();const btn=document.getElementById('btn-gerar');if(!btn.disabled)btn.innerHTML='🔓 LIBERAR MÉTODO COMPLETO — R$ '+totalStr();}
+function toggleBump(qual){if(qual==='bump1'){bump1=!bump1;document.getElementById('bump-card').classList.toggle('selected',bump1);}else{bump2=!bump2;document.getElementById('bump-card-2').classList.toggle('selected',bump2);}atualizarTotalUI();}
+
+function atualizarStepper(etapa){
+  const s1=document.getElementById('step1'),s2=document.getElementById('step2'),s3=document.getElementById('step3');
+  const l1=document.getElementById('line1'),l2=document.getElementById('line2');
+  [s1,s2,s3].forEach(s=>s.classList.remove('active','done'));[l1,l2].forEach(l=>l.classList.remove('done'));
+  if(etapa===2){s1.classList.add('done');s1.querySelector('.step-circle').innerHTML='✓';l1.classList.add('done');s2.classList.add('active');document.getElementById('aviso-banco').style.display='block';}
+  else if(etapa===3){s1.classList.add('done');s1.querySelector('.step-circle').innerHTML='✓';s2.classList.add('done');s2.querySelector('.step-circle').innerHTML='✓';l1.classList.add('done');l2.classList.add('done');s3.classList.add('active');document.getElementById('aviso-banco').style.display='none';}
+}
+
+async function gerarPix(){
+  const nome=document.getElementById('inp-nome').value.trim();
+  const email=document.getElementById('inp-email').value.trim();
+  const wpp=document.getElementById('inp-wpp').value.trim();
+  const cpf=document.getElementById('inp-cpf').value.replace(/\D/g,'');
+  if(!nome||!email||!wpp||!cpf){showPixError('Preencha todos os campos para continuar.');return;}
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){showPixError('Digite um e-mail válido.');return;}
+  if(cpf.length!==11){showPixError('Digite um CPF válido com 11 dígitos.');return;}
+  hidePixError();
+  const btn=document.getElementById('btn-gerar');
+  btn.disabled=true;btn.innerHTML='<span class="spinner"></span> LIBERANDO ACESSO...';
+  try{
+    const response=await fetch('/api/criar-pix',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({nome,email,telefone:wpp,cpf,bump1,bump2})});
+    const data=await response.json();
+    if(!response.ok)throw new Error(data.error||'Erro ao gerar PIX. Tente novamente.');
+    document.getElementById('pix-qr-img').src='data:image/png;base64,'+data.qr_code_base64;
+    document.getElementById('pix-code-display').textContent=data.qr_code;
+    currentPixCode=data.qr_code;
+    document.getElementById('pix-form').style.display='none';
+    document.getElementById('pix-result').style.display='block';
+    document.getElementById('pix-result').scrollIntoView({behavior:'smooth',block:'start'});
+    iniciarPolling(data.id);
+  }catch(err){
+    showPixError(err.message||'Erro ao gerar PIX. Tente novamente.');
+    btn.disabled=false;btn.innerHTML='🔓 LIBERAR MÉTODO COMPLETO — R$ '+totalStr();
+  }
+}
+
+function iniciarPolling(paymentId){
+  if(pollInterval)clearInterval(pollInterval);
+  atualizarStepper(2);
+  pollInterval=setInterval(async()=>{
+    try{
+      const r=await fetch('/api/status-pix?id='+paymentId);
+      const d=await r.json();
+      if(r.ok){
+        if(d.status==='approved'){clearInterval(pollInterval);atualizarStepper(3);document.getElementById('pix-result').style.display='none';document.getElementById('pix-aprovado').style.display='block';document.getElementById('pix-aprovado').scrollIntoView({behavior:'smooth',block:'start'});}
+        else if(['cancelled','rejected','expired'].includes(d.status)){clearInterval(pollInterval);document.getElementById('aguardando').innerHTML='⚠️ PIX expirado. <a href="javascript:location.reload()" style="color:var(--red);font-weight:700;">Gerar novo PIX</a>';}
+      }
+    }catch(e){console.error(e);}
+  },5000);
+}
+
+window.addEventListener('beforeunload',()=>{if(pollInterval)clearInterval(pollInterval);});
+
+function copiarCodigo(){
+  if(!currentPixCode)return;
+  if(navigator.clipboard){navigator.clipboard.writeText(currentPixCode).then(showToast).catch(copiarFallback);}else copiarFallback();
+}
+function copiarFallback(){const ta=document.createElement('textarea');ta.value=currentPixCode;ta.style.position='fixed';ta.style.opacity='0';document.body.appendChild(ta);ta.select();try{document.execCommand('copy');showToast();}catch(e){alert('Copie manualmente o código acima.');}document.body.removeChild(ta);}
+function showToast(){const t=document.getElementById('copy-toast');t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2500);}
+
+// EXIT INTENT
+let exitShown=false,exitCheckoutShown=false;
+function showExitModal(){
+  if(document.getElementById('pix-page').style.display==='block'){if(!exitCheckoutShown){exitCheckoutShown=true;document.getElementById('exit-modal-checkout').classList.add('show');}}
+  else if(document.getElementById('vsl-page').style.display==='block'){if(!exitShown){exitShown=true;if(!video.paused)pauseVideo();document.getElementById('exit-modal').classList.add('show');}}
+}
+function closeModal(){document.getElementById('exit-modal').classList.remove('show');}
+function closeModalCheckout(){document.getElementById('exit-modal-checkout').classList.remove('show');}
+document.addEventListener('mouseleave',(e)=>{if(e.clientY<10)showExitModal();});
+document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='hidden')showExitModal();});
+window.addEventListener('popstate',()=>{showExitModal();history.pushState(null,'',location.href);});
+history.pushState(null,'',location.href);
+
+// MÁSCARAS
+document.getElementById('inp-wpp').addEventListener('input',function(){let v=this.value.replace(/\D/g,'');if(v.length>11)v=v.slice(0,11);if(v.length>6)v='('+v.slice(0,2)+') '+v.slice(2,7)+'-'+v.slice(7);else if(v.length>2)v='('+v.slice(0,2)+') '+v.slice(2);else if(v.length>0)v='('+v;this.value=v;});
+document.getElementById('inp-cpf').addEventListener('input',function(){let v=this.value.replace(/\D/g,'');if(v.length>11)v=v.slice(0,11);if(v.length>9)v=v.slice(0,3)+'.'+v.slice(3,6)+'.'+v.slice(6,9)+'-'+v.slice(9);else if(v.length>6)v=v.slice(0,3)+'.'+v.slice(3,6)+'.'+v.slice(6);else if(v.length>3)v=v.slice(0,3)+'.'+v.slice(3);this.value=v;});
+</script>
+</body>
+</html>
