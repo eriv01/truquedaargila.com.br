@@ -58,13 +58,15 @@
     box-shadow:0 8px 32px rgba(0,0,0,.3);
     aspect-ratio:9/16;
     background:#000;
-    border:3px solid #fff;
+    border:3px solid var(--red);
+    z-index:0;
   }
   #landing-video{width:100%;height:100%;display:block;object-fit:cover;}
   #landing-play-overlay{
     position:absolute;inset:0;
     display:flex;align-items:center;justify-content:center;
     background:rgba(0,0,0,.3);cursor:pointer;
+    z-index:1;
   }
   #landing-play-overlay svg{width:64px;height:64px;filter:drop-shadow(0 2px 8px rgba(0,0,0,.5));}
   #landing-play-overlay.hidden{display:none;}
@@ -73,6 +75,8 @@
     background:#fff;
     padding:0 16px 28px;
     text-align:center;
+    position:relative;
+    z-index:1;
   }
 
   /* BOTÃO LANDING */
@@ -137,7 +141,7 @@
   }
   .q-card:active{transform:scale(.97);}
   .q-card.selected{border-color:var(--red);box-shadow:0 4px 16px rgba(232,0,13,.2);}
-  .q-card img{width:100%;aspect-ratio:1/1;object-fit:cover;display:block;}
+  .q-card img{width:100%;aspect-ratio:1/1;object-fit:cover;display:block;pointer-events:none;}
   .q-card-label{
     padding:10px 8px;
     display:flex;align-items:center;gap:8px;
@@ -414,7 +418,7 @@
             </svg>
           </div>
         </div>
-        <button class="btn-quiz" onclick="iniciarQuiz()">🎯 FAZER TESTE RÁPIDO</button>
+        <button class="btn-quiz" id="btn-quiz-inicio">🎯 FAZER TESTE RÁPIDO</button>
         <p class="btn-quiz-sub">Descubra seu perfil em menos de 1 minuto</p>
       </div>
     </div>
@@ -798,7 +802,15 @@
 // ===== LANDING VIDEO =====
 const landingVideo=document.getElementById('landing-video');
 const landingOverlay=document.getElementById('landing-play-overlay');
-landingOverlay.addEventListener('click',()=>{landingVideo.play();landingOverlay.classList.add('hidden');});
+
+document.addEventListener('DOMContentLoaded', function() {
+  landingOverlay.addEventListener('click',()=>{landingVideo.play();landingOverlay.classList.add('hidden');});
+  document.getElementById('btn-quiz-inicio').addEventListener('click', iniciarQuiz);
+
+  // MÁSCARAS
+  document.getElementById('inp-wpp').addEventListener('input',function(){let v=this.value.replace(/\D/g,'');if(v.length>11)v=v.slice(0,11);if(v.length>6)v='('+v.slice(0,2)+') '+v.slice(2,7)+'-'+v.slice(7);else if(v.length>2)v='('+v.slice(0,2)+') '+v.slice(2);else if(v.length>0)v='('+v;this.value=v;});
+  document.getElementById('inp-cpf').addEventListener('input',function(){let v=this.value.replace(/\D/g,'');if(v.length>11)v=v.slice(0,11);if(v.length>9)v=v.slice(0,3)+'.'+v.slice(3,6)+'.'+v.slice(6,9)+'-'+v.slice(9);else if(v.length>6)v=v.slice(0,3)+'.'+v.slice(3,6)+'.'+v.slice(6);else if(v.length>3)v=v.slice(0,3)+'.'+v.slice(3);this.value=v;});
+});
 
 // ===== QUIZ =====
 let currentStep=1;
@@ -818,28 +830,39 @@ function updateProgress(step){
 }
 
 function selectCard(el,group){
-  const step=el.closest('.quiz-step');
+  const card=el.closest('.q-card');
+  if(!card) return;
+  const step=card.closest('.quiz-step');
+  if(!step) return;
   step.querySelectorAll('.q-card:not(.q-card-multi)').forEach(c=>c.classList.remove('selected'));
-  el.classList.add('selected');
+  card.classList.add('selected');
   const stepNum=step.id.replace('step-','');
-  document.getElementById('btn-'+stepNum).classList.add('enabled');
+  const btn=document.getElementById('btn-'+stepNum);
+  if(btn) btn.classList.add('enabled');
 }
 
 function selectOpt(el,group){
-  const step=el.closest('.quiz-step');
+  const item=el.closest('.opt-item');
+  if(!item) return;
+  const step=item.closest('.quiz-step');
+  if(!step) return;
   step.querySelectorAll('.opt-item').forEach(o=>o.classList.remove('selected'));
-  el.classList.add('selected');
+  item.classList.add('selected');
   const stepNum=step.id.replace('step-','');
-  document.getElementById('btn-'+stepNum).classList.add('enabled');
+  const btn=document.getElementById('btn-'+stepNum);
+  if(btn) btn.classList.add('enabled');
 }
 
 function selectMulti(el){
-  el.classList.toggle('selected');
-  const step=el.closest('.quiz-step');
+  const card=el.closest('.q-card-multi');
+  if(!card) return;
+  card.classList.toggle('selected');
+  const step=card.closest('.quiz-step');
+  if(!step) return;
   const hasSelected=step.querySelector('.q-card-multi.selected');
   const stepNum=step.id.replace('step-','');
   const btn=document.getElementById('btn-'+stepNum);
-  if(hasSelected){btn.classList.add('enabled');}else{btn.classList.remove('enabled');}
+  if(btn){if(hasSelected){btn.classList.add('enabled');}else{btn.classList.remove('enabled');}}
 }
 
 function checkInput(inputId,btnId,min,max){
@@ -1116,8 +1139,6 @@ function setPesoUnit(unit) {
 
 // Inicializa réguas quando as etapas ficam visíveis
 
-// MÁSCARAS
-document.getElementById('inp-wpp').addEventListener('input',function(){let v=this.value.replace(/\D/g,'');if(v.length>11)v=v.slice(0,11);if(v.length>6)v='('+v.slice(0,2)+') '+v.slice(2,7)+'-'+v.slice(7);else if(v.length>2)v='('+v.slice(0,2)+') '+v.slice(2);else if(v.length>0)v='('+v;this.value=v;});
-document.getElementById('inp-cpf').addEventListener('input',function(){let v=this.value.replace(/\D/g,'');if(v.length>11)v=v.slice(0,11);if(v.length>9)v=v.slice(0,3)+'.'+v.slice(3,6)+'.'+v.slice(6,9)+'-'+v.slice(9);else if(v.length>6)v=v.slice(0,3)+'.'+v.slice(3,6)+'.'+v.slice(6);else if(v.length>3)v=v.slice(0,3)+'.'+v.slice(3);this.value=v;});
+</script>
 </body>
 </html>
