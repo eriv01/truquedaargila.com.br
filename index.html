@@ -18,9 +18,9 @@
   #landing-page{display:block;}
   .landing-wrap{max-width:500px;margin:0 auto;padding:0 0 40px;}
 
-  /* HERO TOPO — metade branca metade vermelha */
+  /* HERO TOPO — fundo branco */
   .hero-top{
-    background:linear-gradient(to bottom, #fff 50%, var(--red) 50%);
+    background:#fff;
     padding:28px 16px 0;
     text-align:center;
   }
@@ -42,7 +42,7 @@
   .hero-headline-red{
     font-size:clamp(22px,6vw,32px);
     font-weight:900;line-height:1.15;
-    color:#fff;
+    color:var(--red);
     text-transform:uppercase;
     margin-bottom:16px;
   }
@@ -70,7 +70,7 @@
   #landing-play-overlay.hidden{display:none;}
 
   .reel-section{
-    background:var(--red);
+    background:#fff;
     padding:0 16px 28px;
     text-align:center;
   }
@@ -81,22 +81,22 @@
     width:100%;
     max-width:400px;
     margin:22px auto 0;
-    background:#fff;
-    color:var(--red);
+    background:linear-gradient(135deg,var(--red),var(--red-dark));
+    color:#fff;
     border:none;
     border-radius:10px;
     padding:18px 24px;
     font-size:18px;font-weight:900;
     text-transform:uppercase;letter-spacing:.5px;
     cursor:pointer;
-    box-shadow:0 4px 20px rgba(0,0,0,.2);
+    box-shadow:0 4px 20px rgba(232,0,13,.35);
     animation:pulse-btn 2s infinite;
   }
   @keyframes pulse-btn{
-    0%,100%{box-shadow:0 4px 20px rgba(0,0,0,.2),0 0 0 0 rgba(255,255,255,.4)}
-    50%{box-shadow:0 4px 28px rgba(0,0,0,.3),0 0 0 10px rgba(255,255,255,0)}
+    0%,100%{box-shadow:0 4px 20px rgba(232,0,13,.35),0 0 0 0 rgba(232,0,13,.2)}
+    50%{box-shadow:0 4px 28px rgba(232,0,13,.55),0 0 0 10px rgba(232,0,13,0)}
   }
-  .btn-quiz-sub{font-size:12px;color:rgba(255,255,255,.8);text-align:center;margin-top:8px;}
+  .btn-quiz-sub{font-size:12px;color:#888;text-align:center;margin-top:8px;}
 
   /* ===================== QUIZ ===================== */
   #quiz-page{display:none;min-height:100vh;background:#f0faf5;}
@@ -781,6 +781,7 @@ let currentStep=1;
 const totalSteps=5;
 
 function iniciarQuiz(){
+  landingVideo.pause();
   document.getElementById('landing-page').style.display='none';
   document.getElementById('quiz-page').style.display='block';
   window.scrollTo(0,0);
@@ -891,7 +892,7 @@ function updateVolIcon(){if(video.muted||video.volume===0){volIcon.innerHTML='<p
 document.getElementById('fs-btn').addEventListener('click',()=>{if(document.fullscreenElement)document.exitFullscreen();else playerWrap.requestFullscreen&&playerWrap.requestFullscreen();});
 
 // ===== CHECKOUT =====
-function goToPix(){video.pause();document.getElementById('vsl-page').style.display='none';document.getElementById('pix-page').style.display='block';window.scrollTo(0,0);}
+function goToPix(){video.pause();landingVideo.pause();document.getElementById('vsl-page').style.display='none';document.getElementById('pix-page').style.display='block';window.scrollTo(0,0);}
 function showPixError(msg){const e=document.getElementById('pix-error');e.textContent=msg;e.style.display='block';}
 function hidePixError(){document.getElementById('pix-error').style.display='none';}
 
