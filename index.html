@@ -945,7 +945,7 @@ function goToPix(){video.pause();landingVideo.pause();document.getElementById('v
 function showPixError(msg){const e=document.getElementById('pix-error');e.textContent=msg;e.style.display='block';}
 function hidePixError(){document.getElementById('pix-error').style.display='none';}
 
-const PRECO_BASE=9.90,PRECO_BUMP1=4.97,PRECO_BUMP2=4.97;
+const PRECO_BASE=29,PRECO_BUMP1=4.97,PRECO_BUMP2=4.97;
 let bump1=false,bump2=false;
 function calcTotal(){return parseFloat((PRECO_BASE+(bump1?PRECO_BUMP1:0)+(bump2?PRECO_BUMP2:0)).toFixed(2));}
 function totalStr(){return calcTotal().toFixed(2).replace('.',',');}
