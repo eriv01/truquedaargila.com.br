@@ -1,5 +1,5 @@
 // /api/criar-pix.js
-const PRECO_BASE = 9.90;
+const PRECO_BASE = 29;
 const PRECO_BUMP1 = 4.97;
 const PRECO_BUMP2 = 4.97;
 
